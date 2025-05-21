@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Masukkan Nama</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #FCE4EC;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: #5D4037;
+    }
+    .container {
+      background-color: #F8BBD0;
+      padding: 2rem 3rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 350px;
+      width: 100%;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.7rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+      border: 1px solid #AD1457;
+      font-size: 1rem;
+    }
+    button {
+      background-color: #F48FB1;
+      border: none;
+      padding: 0.8rem 1.8rem;
+      color: white;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #AD1457;
+    }
+    .info {
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      color: #AD1457;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Masukkan Nama Kamu</h2>
+    <input type="text" id="nama" placeholder="Nama kamu..." />
+    <button onclick="submitNama()">Mulai</button>
+    <p class="info">* Nama kamu tidak akan disimpan secara permanen</p>
+  </div>
+
+  <script>
+    function submitNama() {
+      const input = document.getElementById('nama').value.trim();
+      if(input === '') {
+        alert('Tolong isi nama kamu dulu ya!');
+        return;
+      }
+      // Simpan ke sessionStorage
+      sessionStorage.setItem('namaPengguna', input);
+      // Pindah ke beranda.html
+      window.location.href = 'beranda.html';
+    }
+  </script>
+</body>
+</html>

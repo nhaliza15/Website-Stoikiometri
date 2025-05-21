@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembelajaran Stoikiometri</title>
+    <style>
+        /* Reset dan Font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Color Palette - Pink Pastel */
+        :root {
+            --primary: #F8BBD0; /* Pink Pastel */
+            --secondary: #F48FB1; /* Pink Pastel Darker */
+            --accent: #CE93D8; /* Purple-Pink Pastel */
+            --light: #FCE4EC; /* Pink Pastel Light */
+            --dark: #AD1457; /* Deep Pink for Text */
+            --text: #5D4037; /* Brown for Normal Text */
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: var(--dark);
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Foto profil bulet */
+.foto-profil {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--dark);
+}
+
+
+/* Logo kampus kanan */
+.logo-kampus {
+  width: 90px;
+  height: auto;
+}
+
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+     .student-info {
+    margin-bottom: 0rem; 
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+        .university-info {
+            font-size: 1rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .welcome-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        
+        .intro-text {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+        
+        .nav-button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            min-width: 150px;
+            font-weight: 600;
+        }
+        
+        .nav-button:hover {
+            background-color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* Feature Cards */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+            flex: 1 1 250px;
+            max-width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border-top: 4px solid var(--secondary);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-card h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--dark);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 80%;
+            }
+            
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .feature-card {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+    <header>
+        <header>
+  <div class="header-content">
+    <div class="header-top">
+      <a href="https://www.instagram.com/izaa.qt/" target="_blank">
+    <img src="fotoku.png" alt="Foto Iza" class="foto-profil">
+  </a>
+      <p class="student-info">Siti Nurhaliza - 230331604523</p>
+      <a href="https://www.um.ac.id/" target="_blank">
+  <img src="logo-kampus.png" alt="Logo UM" class="logo-kampus">
+</a>
+
+    </div>
+    <p class="university-info">Bahan Ajar Kimia Inovatif | Universitas Negeri Malang</p>
+  </div>
+</header>
+
+    </header>
+    
+    <main>
+        <div class="welcome-container">
+             <p id="welcomeText" style="font-size:1.3rem; font-weight:600; color: var(--dark); margin-bottom: 0.8rem;">
+            Halo, ...
+        </p>
+            
+
+
+<p class="intro-text" style="margin-bottom: 1.2rem;">
+    Selamat datang di website pembelajaran interaktif tentang:
+</p>
+
+<h1 style="margin-bottom: 1rem;">STOIKIOMETRI KIMIA</h1>
+
+<p class="intro-text">
+    Di sini tersedia materi singkat, kuis interaktif, dan game edukasi untuk membantu pemahaman konsep stoikiometri dengan cara yang menyenangkan. <br><br>
+    Website ini dibuat oleh <strong>Siti Nurhaliza</strong>, Mahasiswa S1 Pendidikan Kimia <strong>Universitas Negeri Malang</strong>, untuk memenuhi tugas Mata Kuliah <strong>Bahan Ajar Kimia Inovatif</strong>.<br><br>
+    Kalau ingin lebih kenal tentang pembuat website dan kampusnya tercinta, kamu bisa klik di bagian <strong>foto pembuat</strong> atau <strong>logo kampusnya</strong>, yaa!
+</p>
+
+            
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="location.href='Materi.html'">Materi Singkat</button>
+                <button class="nav-button" onclick="location.href='Kuis.html'">Kuis</button>
+                <button class="nav-button" onclick="location.href='game.html'">Game</button>
+    
+            </div>
+        </div>
+        
+        
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Siti Nurhaliza | Pembelajaran Stoikiometri Kimia</p>
+        </div>
+    </footer>
+    <script>
+    // Ambil nama dari sessionStorage
+    const nama = sessionStorage.getItem('namaPengguna');
+    const welcomeText = document.getElementById('welcomeText');
+
+    if (nama) {
+        welcomeText.textContent = `Halo, ${nama}!`;
+    } else {
+        // Jika tidak ada nama, redirect ke halaman input nama
+        window.location.href = 'index.html';
+    }
+</script>
+</body>
+</html>

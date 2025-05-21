@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kuis Stoikiometri</title>
+  <style>
+    /* Reset dan Font */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Color Palette */
+    :root {
+      --primary: #F8BBD0;
+      --secondary: #F48FB1;
+      --accent: #CE93D8;
+      --light: #FCE4EC;
+      --dark: #AD1457;
+      --text: #5D4037;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: var(--dark);
+      padding: 2rem 0;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .student-info {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    .university-info {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+    }
+
+    .question {
+      margin-bottom: 2rem;
+    }
+
+    .question h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .options label {
+      display: block;
+      background-color: var(--light);
+      padding: 0.8rem;
+      margin-bottom: 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .options input[type="radio"] {
+      margin-right: 0.5rem;
+    }
+
+    .options label:hover {
+      background-color: var(--accent);
+      color: white;
+    }
+
+   .button-group {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.button-group button,
+.kembali-btn {
+  display: inline-block;
+  margin: 0.5rem;
+  padding: 0.8rem 2rem;
+  background-color: var(--accent);
+  color: white;
+  border: 2px solid var(--accent);
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button-group button:hover,
+.kembali-btn:hover {
+  background-color: var(--dark);
+  border-color: var(--dark);
+  transform: translateY(-2px);
+}
+
+
+    footer {
+      background-color: var(--primary);
+      color: var(--dark);
+      text-align: center;
+      padding: 1.5rem 0;
+      margin-top: 3rem;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <p class="student-info">Siti Nurhaliza - 230331604523</p>
+      <p class="university-info">Bahan Ajar Kimia Inovatif | Universitas Negeri Malang</p>
+    </div>
+  </header>
+
+  <main>
+    <h1>Kuis Stoikiometri</h1>
+
+    <div class="question">
+      <h2>1. Jika 2 mol H<sub>2</sub> bereaksi dengan O<sub>2</sub> membentuk H<sub>2</sub>O, berapa mol H<sub>2</sub>O yang terbentuk?</h2>
+      <div class="options">
+        <label><input type="radio" name="q1" /> 1 mol</label>
+        <label><input type="radio" name="q1" /> 2 mol</label>
+        <label><input type="radio" name="q1" /> 3 mol</label>
+        <label><input type="radio" name="q1" /> 4 mol</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <h2>2. Apa yang dimaksud dengan stoikiometri?</h2>
+      <div class="options">
+        <label><input type="radio" name="q2" /> Ilmu tentang senyawa organik</label>
+        <label><input type="radio" name="q2" /> Ilmu tentang perbandingan zat dalam reaksi kimia</label>
+        <label><input type="radio" name="q2" /> Ilmu tentang ion</label>
+        <label><input type="radio" name="q2" /> Ilmu tentang struktur atom</label>
+      </div>
+    </div>
+
+      <div class="question">
+      <h2>3. Suatu senyawa dengan M<sub>r</sub>= 80 mengandung 40% massa unsur X (A<sub>r</sub> = 32) dan sisanya unsur Y (A<sub>r</sub> = 16). Rumus molekul senyawa tersebut adalah…</h2>
+      <div class="options">
+        <label><input type="radio" name="q3" value="XY"/> XY</label>
+        <label><input type="radio" name="q3" value="X3Y4"/> X<sub>3</sub>Y<sub>4</sub></label>
+        <label><input type="radio" name="q3" value="XY2"/> XY<sub>2</sub></label>
+        <label><input type="radio" name="q3" value="XY₃"/> XY₃</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <h2>4. Menurut Hukum Gay Lussac, perubahan volume gas dipengaruhi oleh...</h2>
+      <div class="options">
+        <label><input type="radio" name="q4" /> Suhu dan tekanan</label>
+        <label><input type="radio" name="q4" /> Suhu dan massa</label>
+        <label><input type="radio" name="q4" /> Massa dan tekanan</label>
+        <label><input type="radio" name="q4" /> Massa dan suhu</label>
+      </div>
+    </div>
+
+    <div class="button-group">
+  <button onclick="kumpulkanJawaban()">Kumpulkan Jawaban</button>
+  <button onclick="resetKuis()">Mulai Ulang</button>
+  <a href="Beranda.html" class="kembali-btn">← Kembali ke Beranda</a>
+</div>
+
+
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Siti Nurhaliza | Pembelajaran Stoikiometri Kimia</p>
+  </footer>
+  <!-- Tambahkan ini sebelum </body> -->
+<script>
+  function resetKuis() {
+    for (let i = 1; i <= 4; i++) {
+      const name = 'q' + i;
+      const options = document.getElementsByName(name);
+
+      options.forEach(option => {
+        option.checked = false;
+        option.disabled = false;
+        option.parentElement.style.color = 'initial';
+      });
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function kumpulkanJawaban() {
+    let skor = 0;
+
+    const jawabanBenar = {
+      q1: '2 mol',
+      q2: 'Ilmu tentang perbandingan zat dalam reaksi kimia',
+      q3: 'XY₃',
+      q4: 'Suhu dan tekanan'
+    };
+
+    for (let i = 1; i <= 4; i++) {
+      const name = 'q' + i;
+      const options = document.getElementsByName(name);
+
+      options.forEach(option => {
+        const label = option.parentElement;
+        const teksJawaban = label.textContent.trim();
+
+        label.style.color = 'initial';
+        option.disabled = true;
+
+        if (option.checked) {
+          if (teksJawaban === jawabanBenar[name]) {
+            skor++;
+            label.style.color = 'green';
+          } else {
+            label.style.color = 'red';
+          }
+        } else if (teksJawaban === jawabanBenar[name]) {
+          label.style.color = 'green';
+        }
+      });
+    }
+
+    alert('Skor kamu: ' + skor + '/4 🎉');
+  }
+</script>
+
+
+
+
+</body>
+</html>

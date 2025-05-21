@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Interaktif Stoikiometri</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    :root {
+      --primary: #F8BBD0;
+      --secondary: #F48FB1;
+      --accent: #CE93D8;
+      --light: #FCE4EC;
+      --dark: #AD1457;
+      --text: #5D4037;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: var(--dark);
+      padding: 2rem 0;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--dark);
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+
+    .game-section {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 3px dashed var(--accent);
+    }
+
+    .match-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .questions, .answers {
+      flex: 1;
+    }
+
+    .drop-zone {
+      background: var(--light);
+      border: 2px dashed var(--accent);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      min-height: 60px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .drag-item {
+      background: var(--secondary);
+      color: white;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      cursor: grab;
+      font-weight: bold;
+      user-select: none;
+    }
+
+    .drop-zone.hovered {
+      background-color: var(--primary);
+    }
+
+    .item.correct {
+  background-color: #A5D6A7; /* hijau */
+  color: #1B5E20;
+}
+
+.item.incorrect {
+  background-color: #EF9A9A; /* merah */
+  color: #B71C1C;
+}
+
+
+    .drop-zone .result-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.3rem;
+      pointer-events: none;
+    }
+
+    .button-group {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    button,
+    .kembali-btn {
+      padding: 0.6rem 1.5rem;
+      background-color: var(--accent);
+      color: white;
+      border: 2px solid var(--accent);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      font-weight: 600;
+    }
+
+    button:hover,
+    .kembali-btn:hover {
+      background-color: var(--dark);
+      border-color: var(--dark);
+      transform: translateY(-2px);
+    }
+
+    .kembali-btn {
+      display: block;
+      width: fit-content;
+      margin: 3rem auto 0;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    button,
+    .next-btn {
+      padding: 0.6rem 1.5rem;
+      background-color: var(--accent);
+      color: white;
+      border: 2px solid var(--accent);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      font-weight: 600;
+    }
+    button:hover,
+    .next-btn:hover {
+      background-color: var(--dark);
+      border-color: var(--dark);
+      transform: translateY(-2px);
+    }
+    .next-btn {
+      display: block;
+      width: fit-content;
+      margin: 3rem auto 0;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    footer {
+      background-color: var(--primary);
+      color: var(--dark);
+      text-align: center;
+      padding: 1.5rem 0;
+      margin-top: 3rem;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+    
+  <header>
+    <div class="header-content">
+      <p class="student-info">Siti Nurhaliza - 230331604523</p>
+      <p class="university-info">Bahan Ajar Kimia Inovatif | Universitas Negeri Malang</p>
+    </div>
+  </header>
+
+  <main>
+    <h1>Game Interaktif Stoikiometri</h1>
+
+    <!-- Game 1: Matching -->
+    <div class="game-section" id="matching-game">
+      <h2>Game 1: Drag and Drop</h2>
+      <p>Seret jawaban di kanan ke pertanyaan di sebelah kiri yang sesuai.</p>
+
+      <div class="match-container">
+        <div class="questions"></div>
+        <div class="answers"></div>
+      </div>
+
+      <button onclick="resetMatchingGame()">Mulai Ulang</button>
+    </div>
+
+<!-- Game 2: Drag and Drop -->
+   <section class="game-section" id="game-line-match">
+  <h2>Game 2: Matching</h2>
+  <p>Klik pertanyaan lalu klik jawaban yang tepat untuk menghubungkannya dengan garis.</p>
+
+  <div style="display: flex; justify-content: space-between; position: relative; max-width: 700px; margin: 1rem auto;">
+    <ul id="questions" style="list-style:none; padding:0; width:45%;">
+      <li class="item" data-id="1" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">massa total zat sebelum dan sesudah reaksi tetap.</li>
+      <li class="item" data-id="2" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">senyawa selalu terdiri dari unsur dengan perbandingan massa tetap.</li>
+      <li class="item" data-id="3" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">Partikel unsur bisa berupa molekul unsur.</li>
+    </ul>
+
+    <canvas id="canvas" width="700" height="250" style="position:absolute; top:0; left:0; pointer-events:none;"></canvas>
+
+    <ul id="answers" style="list-style:none; padding:0; width:45%;">
+      <li class="item" data-id="3" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">Hipotesis Avogadro</li>
+      <li class="item" data-id="1" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">Hukum Kekekalan Massa</li>
+      <li class="item" data-id="2" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">Hukum Perbandingan Tetap</li>
+    </ul>
+  </div>
+
+  <div style="text-align:center; margin-top:1rem;">
+    <button onclick="checkMatches()">Cek Jawaban</button>
+    <button onclick="resetLines()">Mulai Ulang</button>
+  </div>
+</section>
+
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  const questions = document.querySelectorAll('#questions .item');
+  const answers = document.querySelectorAll('#answers .item');
+
+  let selectedQuestion = null;
+  let connections = []; // {qId, aId}
+
+  function getCenterPosition(element, isQuestion) {
+  const rect = element.getBoundingClientRect();
+  const parentRect = canvas.parentElement.getBoundingClientRect();
+  return {
+    x: isQuestion ? rect.right - parentRect.left : rect.left - parentRect.left,
+    y: rect.top + rect.height / 2 - parentRect.top
+  };
+}
+
+
+  // Clear canvas
+  function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // Draw all lines
+  function drawLines() {
+    clearCanvas();
+    ctx.strokeStyle = 'var(--accent)';
+    ctx.lineWidth = 3;
+    connections.forEach(conn => {
+      const qElem = document.querySelector(`#questions .item[data-id='${conn.qId}']`);
+      const aElem = document.querySelector(`#answers .item[data-id='${conn.aId}']`);
+      if (qElem && aElem) {
+        const start = getCenterPosition(qElem, true);  // true = pertanyaan (kanan)
+const end = getCenterPosition(aElem, false);   // false = jawaban (kiri)
+
+        ctx.beginPath();
+        ctx.moveTo(start.x, start.y);
+        ctx.lineTo(end.x, end.y);
+        ctx.stroke();
+      }
+    });
+  }
+
+  // Select pertanyaan dulu
+  questions.forEach(q => {
+    q.addEventListener('click', () => {
+      // Jika sudah ada koneksi untuk pertanyaan ini, hapus dulu
+      connections = connections.filter(c => c.qId !== q.dataset.id);
+
+      selectedQuestion = q;
+      // highlight yang terpilih
+      questions.forEach(q2 => q2.style.backgroundColor = '');
+      q.style.backgroundColor = 'var(--primary)';
+    });
+  });
+
+  // Klik jawaban untuk menghubungkan
+  answers.forEach(a => {
+    a.addEventListener('click', () => {
+      if (!selectedQuestion) return alert('Klik pertanyaan dulu!');
+
+      // cek apakah jawaban sudah dipakai untuk pertanyaan lain
+      const existing = connections.find(c => c.aId === a.dataset.id);
+      if (existing) {
+        alert('Jawaban ini sudah digunakan, pilih jawaban lain.');
+        return;
+      }
+
+      connections.push({ qId: selectedQuestion.dataset.id, aId: a.dataset.id });
+      // hilangkan highlight
+      questions.forEach(q2 => q2.style.backgroundColor = '');
+
+      selectedQuestion = null;
+      drawLines();
+    });
+  });
+
+function checkMatches() {
+  let correct = 0;
+
+  // Reset style sebelumnya
+  questions.forEach(q => q.classList.remove('correct', 'incorrect'));
+  answers.forEach(a => a.classList.remove('correct', 'incorrect'));
+
+  connections.forEach(c => {
+    const qElem = document.querySelector(`#questions .item[data-id='${c.qId}']`);
+    const aElem = document.querySelector(`#answers .item[data-id='${c.aId}']`);
+
+    if (c.qId === c.aId) {
+      correct++;
+      qElem.classList.add('correct');
+      aElem.classList.add('correct');
+    } else {
+      qElem.classList.add('incorrect');
+      aElem.classList.add('incorrect');
+    }
+  });
+
+  alert(`Jawaban benar: ${correct} dari ${questions.length}`);
+}
+
+
+function resetLines() {
+  connections = [];
+  clearCanvas();
+  questions.forEach(q => {
+    q.style.backgroundColor = '';
+    q.classList.remove('correct', 'incorrect');
+  });
+  answers.forEach(a => a.classList.remove('correct', 'incorrect'));
+}
+
+
+
+</script>
+
+
+
+
+   
+
+    <a href="Beranda.html" class="kembali-btn">← Kembali ke Beranda</a>
+    <a href="Game1.html" class="next-btn">Game Selanjutnya →</a>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Siti Nurhaliza | Pembelajaran Stoikiometri Kimia</p>
+  </footer>
+
+<script>
+  // Data pertanyaan dan jawaban
+  const qaData = [
+    {
+      question: 'massa total zat sebelum dan sesudah reaksi tetap.',
+      answer: 'Hukum Kekekalan Massa'
+    },
+    {
+      question: 'senyawa selalu terdiri dari unsur dengan perbandingan massa tetap.',
+      answer: 'Hukum Perbandingan Tetap'
+    },
+    {
+      question: 'Partikel unsur tidak selalu berupa atom yang berdiri sendiri, melainkan bisa berbentuk molekul unsur.',
+      answer: 'Hipotesis Avogadro'
+    }
+  ];
+
+  // Fungsi acak array (Fisher-Yates Shuffle)
+  function shuffleArray(array) {
+    let arr = array.slice(); // copy array supaya asli ga keubah
+    for (let i = arr.length -1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i +1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  // Render game
+  function renderMatchingGame() {
+    const questionsDiv = document.querySelector('#matching-game .questions');
+    const answersDiv = document.querySelector('#matching-game .answers');
+
+    // Bersihkan dulu konten lama
+    questionsDiv.innerHTML = '';
+    answersDiv.innerHTML = '';
+
+    // Acak pertanyaan dan jawaban
+    const shuffledQuestions = shuffleArray(qaData);
+    const shuffledAnswers = shuffleArray(qaData);
+
+    // Render pertanyaan (drop zones)
+    shuffledQuestions.forEach(item => {
+      const div = document.createElement('div');
+      div.classList.add('drop-zone');
+      div.setAttribute('data-answer', item.answer);
+      div.textContent = item.question;
+      questionsDiv.appendChild(div);
+    });
+
+    // Render jawaban (drag items)
+    shuffledAnswers.forEach(item => {
+      const div = document.createElement('div');
+      div.classList.add('drag-item');
+      div.setAttribute('draggable', 'true');
+      div.setAttribute('data-value', item.answer);
+      div.textContent = item.answer;
+      answersDiv.appendChild(div);
+    });
+
+    addDragAndDropListeners();
+  }
+
+  // Tambah event drag and drop
+  function addDragAndDropListeners() {
+    const dragItems = document.querySelectorAll('.drag-item');
+    const dropZones = document.querySelectorAll('.drop-zone');
+
+    dragItems.forEach(item => {
+      item.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text/plain', item.dataset.value);
+      });
+    });
+
+    dropZones.forEach(zone => {
+      zone.addEventListener('dragover', e => {
+        e.preventDefault();
+        zone.classList.add('hovered');
+      });
+
+      zone.addEventListener('dragleave', () => {
+        zone.classList.remove('hovered');
+      });
+
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        const value = e.dataTransfer.getData('text/plain');
+        zone.classList.remove('hovered');
+
+        // Bersihkan tanda hasil jika ada
+        const existingIcon = zone.querySelector('.result-icon');
+        if (existingIcon) existingIcon.remove();
+
+        // Cek jawaban
+        if (zone.dataset.answer === value) {
+          // Beri tanda centang hijau
+          const icon = document.createElement('span');
+          icon.classList.add('result-icon');
+          icon.textContent = '✅';
+          icon.style.color = 'green';
+          zone.appendChild(icon);
+
+          zone.style.color = 'green';
+        } else {
+          // Tanda silang merah
+          const icon = document.createElement('span');
+          icon.classList.add('result-icon');
+          icon.textContent = '❌';
+          icon.style.color = 'red';
+          zone.appendChild(icon);
+
+          zone.style.color = 'red';
+        }
+      });
+    });
+
+  }
+
+  // Reset game
+  function resetMatchingGame() {
+    renderMatchingGame();
+  }
+
+  // Inisialisasi pertama kali
+  renderMatchingGame();
+
+   document.getElementById('backHome').addEventListener('click', () => {
+    alert('Kembali ke beranda (Beranda.html)');
+  });
+</script>
+</body>
+</html>

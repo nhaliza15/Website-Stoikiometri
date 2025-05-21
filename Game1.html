@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game 3 & 4 - Stoikiometri</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff1f2;
+      color: #1e293b;
+    }
+    h1, h2 {
+      color: #0f172a;
+    }
+    .card {
+      background-color: #ffe4e6;
+    }
+    .correct {
+      background-color: #bbf7d0 !important;
+    }
+    .incorrect {
+      background-color: #fecaca !important;
+    }
+    .kembali-btn, .next-btn {
+      display: inline-block;
+      background-color: #64748b; /* slate-500 */
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      margin: 0 0.5rem;
+      border-radius: 1rem;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+    .kembali-btn:hover {
+      background-color: #475569; /* slate-600 */
+    }
+    .next-btn:hover {
+      background-color: #475569;
+    }
+  </style>
+</head>
+<body class="p-6">
+  <!-- Identitas Halaman -->
+  <header class="mb-10 text-center">
+    <p class="text-lg mt-2 text-slate-600">Siti Nurhaliza - 230331604523</p>
+    <p class="text-lg text-slate-600">Bahan Ajar Kimia Inovatif | Universitas Negeri Malang</p>
+    <h1 class="text-4xl mt-4 text-pink-600 font-semibold">Game Interaktif Stoikiometri</h1>
+  </header>
+
+  <!-- Game 3 -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-semibold mb-4">Game 3: Urutkan Langkah-langkah Perhitungan Stoikiometri</h2>
+    <div class="flex flex-col md:flex-row gap-6">
+      <div class="flex-1">
+        <p class="mb-2 font-medium">Langkah-langkah yang bisa dipilih:</p>
+        <div id="options" class="grid gap-4">
+          <div class="card p-4 rounded-2xl shadow cursor-move" draggable="true">Mengidentifikasi zat yang diketahui</div>
+          <div class="card p-4 rounded-2xl shadow cursor-move" draggable="true">Menentukan mol zat</div>
+          <div class="card p-4 rounded-2xl shadow cursor-move" draggable="true">Menggunakan perbandingan mol</div>
+          <div class="card p-4 rounded-2xl shadow cursor-move" draggable="true">Menghitung massa atau volume zat yang ditanya</div>
+        </div>
+      </div>
+      <div class="flex-1">
+        <p class="mb-2 font-medium">Urutan langkah kamu:</p>
+        <div id="answers" class="min-h-[150px] grid gap-4 border-2 border-dashed border-pink-300 p-4 rounded-2xl"></div>
+      </div>
+    </div>
+
+    <!-- Tombol Reset dan Kumpulkan di atas -->
+    <div class="mt-8 text-center flex justify-center gap-4">
+      <button onclick="resetGame3()" class="bg-pink-800 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-2xl shadow-md">Reset</button>
+      <button onclick="checkGame3()" class="bg-pink-800 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-2xl shadow-md">Kumpulkan Jawaban</button>
+    </div>
+
+    <!-- Tombol Navigasi Kembali dan Selanjutnya di bawah -->
+    <div class="mt-8 text-center">
+      <a href="Beranda.html" class="kembali-btn">← Kembali ke Beranda</a>
+      <a href="Game.html" class="next-btn">Game Selanjutnya →</a>
+    </div>
+
+    <p id="resultGame3" class="mt-4 font-semibold text-center"></p>
+  </section>
+
+  <hr class="my-10" />
+
+  <script>
+    // Drag and drop Game 3
+    const options = document.getElementById("options");
+    const answers = document.getElementById("answers");
+    let dragged;
+
+    document.querySelectorAll("[draggable=true]").forEach(el => {
+      el.addEventListener("dragstart", e => {
+        dragged = e.target;
+      });
+    });
+
+    answers.addEventListener("dragover", e => e.preventDefault());
+    answers.addEventListener("drop", e => {
+      e.preventDefault();
+      if (dragged && !answers.contains(dragged)) {
+        const clone = dragged.cloneNode(true);
+        clone.setAttribute("draggable", false);
+        clone.classList.add("cursor-default");
+        clone.classList.remove("cursor-move");
+        answers.appendChild(clone);
+        dragged.remove();
+      }
+    });
+
+    function resetGame3() {
+      location.reload();
+    }
+
+    function checkGame3() {
+      const correct = [
+        "Mengidentifikasi zat yang diketahui",
+        "Menentukan mol zat",
+        "Menggunakan perbandingan mol",
+        "Menghitung massa atau volume zat yang ditanya"
+      ];
+      const children = [...answers.children];
+      let score = 0;
+
+      children.forEach((child, index) => {
+        if (child.innerText === correct[index]) {
+          child.classList.add("correct");
+          score++;
+        } else {
+          child.classList.add("incorrect");
+        }
+      });
+
+      document.getElementById("resultGame3").innerText = `Jawaban benar: ${score} dari 4`; 
+    }
+  </script>
+</body>
+</html>
