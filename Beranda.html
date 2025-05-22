@@ -232,9 +232,11 @@
     <main>
         <div class="welcome-container">
              <p id="welcomeText" style="font-size:1.3rem; font-weight:600; color: var(--dark); margin-bottom: 0.8rem;">
-            Halo, ...
+            
         </p>
             
+<h2 id="sapaan" class="text-xl font-semibold mb-4"></h2>
+
 
 
 <p class="intro-text" style="margin-bottom: 1.2rem;">
@@ -267,16 +269,15 @@
         </div>
     </footer>
     <script>
-    // Ambil nama dari sessionStorage
-    const nama = sessionStorage.getItem('namaPengguna');
-    const welcomeText = document.getElementById('welcomeText');
+  const nama = sessionStorage.getItem('namaPengguna');
 
-    if (nama) {
-        welcomeText.textContent = `Halo, ${nama}!`;
-    } else {
-        // Jika tidak ada nama, redirect ke halaman input nama
-        window.location.href = 'index.html';
-    }
+  if (nama) {
+    const sapaan = nama.toLowerCase() === 'dwi rizqi syah putra'
+      ? 'Halo, sayang'
+      : `Halo, ${nama}`;
+    document.getElementById('sapaan').innerText = sapaan;
+  }
 </script>
+
 </body>
 </html>
