@@ -14,7 +14,7 @@
 
     .board {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 4px;
       max-width: 360px;
       margin: auto;
@@ -116,7 +116,7 @@
   const answerInput = document.getElementById("answerInput");
   const feedback = document.getElementById("feedback");
 
-  const totalCells = 36;
+  const totalCells = 25;
   let playerPos = 0;
   let currentDice = 0;
   let currentQuestion = {};
@@ -190,13 +190,21 @@ function checkAnswer() {
   const userAnswer = answerInput.value.trim();
   const correctAnswer = currentQuestion.a;
 
-  if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
-    playerPos += currentDice;
-    if (playerPos > totalCells) playerPos = totalCells;
-    feedback.innerHTML = `✅ <strong>Jawaban benar!</strong> Kamu maju ${currentDice} langkah.`;
-  } else {
-    feedback.innerHTML = `❌ <strong>Jawaban salah.</strong> Jawaban yang benar: <strong>${correctAnswer}</strong>.`;
+ if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+  playerPos += currentDice;
+  if (playerPos > totalCells) playerPos = totalCells;
+
+  feedback.innerHTML = `✅ <strong>Jawaban benar!</strong> Kamu maju ${currentDice} langkah.`;
+
+  // Notifikasi jika sudah sampai finish
+  if (playerPos >= totalCells) {
+    alert("🎉 Kamu sudah sampai FINISH! Selamat!");
+    localStorage.setItem("bonusSelesai", "true");
   }
+
+} else {
+  feedback.innerHTML = `❌ <strong>Jawaban salah.</strong> Jawaban yang benar: <strong>${correctAnswer}</strong>.`;
+}
 
   // Sembunyikan tombol kirim setelah jawaban dikirim
   document.querySelector("#questionBox button").style.display = "none";
@@ -224,4 +232,5 @@ function resetGame() {
 }
 
   drawBoard();
+  localStorage.setItem("GameBonusDone", "true");
 </script>
