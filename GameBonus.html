@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Game Bonus - Ular Tangga Stoikiometri</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #ffe4e6;
+      color: #4b5563;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 4px;
+      max-width: 360px;
+      margin: auto;
+    }
+
+    .cell {
+      background-color: #f9a8d4;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .token {
+      background-color: #ec4899;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+    }
+
+    .question-box {
+      background-color: #fbcfe8;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+    }
+
+    .question-box input {
+      margin-top: 0.5rem;
+      padding: 0.4rem;
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #d946ef;
+    }
+
+    .btn {
+      margin: 0.5rem;
+      padding: 0.6rem 1.5rem;
+      border-radius: 20px;
+      font-weight: 600;
+      background-color: #f472b6;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #ec4899;
+    }
+  </style>
+</head>
+<body class="p-6 text-center">
+
+  <!-- Identitas -->
+  <header class="mb-6">
+    <p class="text-lg text-slate-600">Siti Nurhaliza - 230331604523</p>
+    <p class="text-lg text-slate-600">Bahan Ajar Kimia Inovatif | Universitas Negeri Malang</p>
+    <h1 class="text-3xl font-semibold text-pink-600 mt-2">Ular Tangga Stoikiometri 🎲</h1>
+  </header>
+
+  <!-- Papan -->
+  <div class="board mb-6" id="board"></div>
+
+  <!-- Potongan HTML lainnya tetap sama seperti sebelumnya -->
+
+<!-- Kontrol -->
+<div class="mb-4">
+  <button class="btn" onclick="rollDice()">🎲 Lempar Dadu</button>
+  <button class="btn" onclick="resetGame()">🔁 Mulai Ulang</button>
+  <a href="Beranda.html" class="btn">🏠 Kembali ke Beranda</a>
+</div>
+
+<!-- Instruksi -->
+<p id="instruction" class="mb-4 text-pink-800 font-medium">
+  Setelah melempar dadu, kamu harus menjawab pertanyaan. Jika benar, kamu bisa maju. Jika salah, kamu tetap di tempat. Jawabanmu akan langsung dicek!
+</p>
+
+<p id="diceResult" class="font-medium mb-4 text-pink-600"></p>
+
+<!-- Pertanyaan -->
+<div id="questionBox" class="question-box hidden">
+  <p id="questionText" class="font-medium mb-2"></p>
+  <input type="text" id="answerInput" placeholder="Jawaban kamu..." />
+  <button class="btn mt-2" onclick="checkAnswer()">Kirim Jawaban</button>
+  <p id="feedback" class="mt-3 font-semibold text-sm text-pink-800"></p>
+</div>
+
+<script>
+  const board = document.getElementById("board");
+  const diceResult = document.getElementById("diceResult");
+  const questionBox = document.getElementById("questionBox");
+  const questionText = document.getElementById("questionText");
+  const answerInput = document.getElementById("answerInput");
+  const feedback = document.getElementById("feedback");
+
+  const totalCells = 36;
+  let playerPos = 0;
+  let currentDice = 0;
+  let currentQuestion = {};
+
+  const questions = [
+    { q: "Jika Mr H2O adalah 18, berapa massa 2 mol H2O?", a: "36" },
+    { q: "Jika rumus molekul cuka adalah CH₃COOH, rumus empirisnya adalah?", a: "CH2O" },
+    { q: "Jika 1 mol CO2 = 44 gram, berapa gram 0.5 mol CO2?", a: "22" },
+    { q: "Perhatikan persamaan reaksi berikut, Fe₂O₃ + 3CO → 2Fe + 3CO₂. Dari reaksi tersebut, ternyata dihasilkan 224 gr besi. Massa besi (III) oksida yang bereaksi adalah … gram (Ar Fe = 56, C = 12, dan O = 16)", a: "320" },
+    { q: "Mr NaCl adalah 58.5. Berapa massa dari 2 mol NaCl?", a: "117" },
+    { q: "Hukum apakah yang menyatakan bahwa massa total zat sebelum dan sesudah reaksi adalah tetap?", a: "hukum kekekalan massa"},
+    { q: "Berapa mol dari 18 gram H2O jika Mr-nya 18?", a: "1" },
+    { q: "Stoikiometri berasal dari kata 'stoicheion' dalam bahasa Yunani yang artinya?", a: "mengukur"},
+    { q: "Jika Mr CH4 = 16, berapa massa 3 mol CH4?", a: "48" },
+    { q: "Satuan untuk menyatakan jumlah partikel zat adalah...", a: "Mol"}
+  ];
+
+  function drawBoard() {
+    board.innerHTML = "";
+    for (let i = 1; i <= totalCells; i++) {
+      const cell = document.createElement("div");
+      cell.className = "cell";
+      cell.textContent = i;
+
+      if (i === playerPos) {
+        const token = document.createElement("div");
+        token.className = "token";
+        cell.appendChild(token);
+      }
+
+      board.appendChild(cell);
+    }
+  }
+
+let isWaitingAnswer = false;
+
+function rollDice() {
+  if (isWaitingAnswer) {
+    // Kalau masih menunggu jawaban, jangan lempar dadu lagi
+    alert("Selesaikan dulu soal sebelumnya ya!");
+    return;
+  }
+
+  currentDice = Math.floor(Math.random() * 6) + 1;
+  diceResult.textContent = `Angka dadu: ${currentDice}`;
+  showQuestion();
+
+  // Set flag menunggu jawaban dan disable tombol lempar dadu
+  isWaitingAnswer = true;
+  document.querySelector("button[onclick='rollDice()']").disabled = true;
+}
+
+  function showQuestion() {
+    currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+    questionText.textContent = currentQuestion.q;
+    questionBox.classList.remove("hidden");
+    answerInput.value = "";
+    feedback.textContent = "";
+  }
+
+  function showQuestion() {
+  currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+  questionText.textContent = currentQuestion.q;
+  questionBox.classList.remove("hidden");
+  answerInput.value = "";
+  feedback.textContent = "";
+  document.querySelector("#questionBox button").style.display = "inline-block"; // munculin tombol
+}
+
+function checkAnswer() {
+  const userAnswer = answerInput.value.trim();
+  const correctAnswer = currentQuestion.a;
+
+  if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+    playerPos += currentDice;
+    if (playerPos > totalCells) playerPos = totalCells;
+    feedback.innerHTML = `✅ <strong>Jawaban benar!</strong> Kamu maju ${currentDice} langkah.`;
+  } else {
+    feedback.innerHTML = `❌ <strong>Jawaban salah.</strong> Jawaban yang benar: <strong>${correctAnswer}</strong>.`;
+  }
+
+  // Sembunyikan tombol kirim setelah jawaban dikirim
+  document.querySelector("#questionBox button").style.display = "none";
+
+  drawBoard();
+
+  // Setelah feedback muncul 4 detik, sembunyikan soal dan enable tombol lempar dadu
+  setTimeout(() => {
+    questionBox.classList.add("hidden");
+    feedback.textContent = "";
+    diceResult.textContent = "";
+    isWaitingAnswer = false;
+    document.querySelector("button[onclick='rollDice()']").disabled = false;
+  }, 4000);
+}
+
+function resetGame() {
+  playerPos = 0;
+  drawBoard();
+  diceResult.textContent = "";
+  questionBox.classList.add("hidden");
+  feedback.textContent = "";
+  isWaitingAnswer = false;
+  document.querySelector("button[onclick='rollDice()']").disabled = false;
+}
+
+  drawBoard();
+</script>
