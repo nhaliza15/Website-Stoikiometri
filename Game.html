@@ -64,7 +64,7 @@
     .game-section {
       margin-bottom: 3rem;
       padding-bottom: 2rem;
-      border-bottom: 3px dashed var(--accent);
+      border-bottom: 4px dashed var(--accent);
     }
 
     .match-container {
@@ -222,17 +222,19 @@
 
   <div style="display: flex; justify-content: space-between; position: relative; max-width: 700px; margin: 1rem auto;">
     <ul id="questions" style="list-style:none; padding:0; width:45%;">
-      <li class="item" data-id="1" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">massa total zat sebelum dan sesudah reaksi tetap.</li>
-      <li class="item" data-id="2" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">senyawa selalu terdiri dari unsur dengan perbandingan massa tetap.</li>
-      <li class="item" data-id="3" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">Partikel unsur bisa berupa molekul unsur.</li>
+      <li class="item" data-id="1" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">H</li>
+      <li class="item" data-id="2" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">C</li>
+      <li class="item" data-id="3" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">Na</li>
+      <li class="item" data-id="4" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">O</li>
     </ul>
 
     <canvas id="canvas" width="700" height="250" style="position:absolute; top:0; left:0; pointer-events:none;"></canvas>
 
     <ul id="answers" style="list-style:none; padding:0; width:45%;">
-      <li class="item" data-id="3" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">Hipotesis Avogadro</li>
-      <li class="item" data-id="1" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">Hukum Kekekalan Massa</li>
-      <li class="item" data-id="2" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">Hukum Perbandingan Tetap</li>
+      <li class="item" data-id="2" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">12</li>
+      <li class="item" data-id="1" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">1</li>
+      <li class="item" data-id="3" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">11</li>
+      <li class="item" data-id="4" style="padding:0.5rem; border:1px solid var(--accent); margin-bottom: 0.7rem; border-radius:8px; cursor:pointer;">16</li>
     </ul>
   </div>
 
@@ -319,7 +321,12 @@ const end = getCenterPosition(aElem, false);   // false = jawaban (kiri)
       drawLines();
     });
   });
-
+const correctAnswers = {
+  1: "1",   // H -> 1
+  2: "12",  // C -> 12
+  3: "11",  // Na -> 11
+  4: "16"   // O -> 16
+};
 function checkMatches() {
   let correct = 0;
 
@@ -331,6 +338,7 @@ function checkMatches() {
     const qElem = document.querySelector(`#questions .item[data-id='${c.qId}']`);
     const aElem = document.querySelector(`#answers .item[data-id='${c.aId}']`);
 
+    const jawabanValue = aElem.textContent.trim(); // nilai jawaban
     if (c.qId === c.aId) {
       correct++;
       qElem.classList.add('correct');
@@ -343,6 +351,11 @@ function checkMatches() {
 
   alert(`Jawaban benar: ${correct} dari ${questions.length}`);
 }
+function shuffleList(listElement) {
+  for (let i = listElement.children.length; i >= 0; i--) {
+    listElement.appendChild(listElement.children[Math.random() * i | 0]);
+  }
+}
 
 
 function resetLines() {
@@ -353,7 +366,11 @@ function resetLines() {
     q.classList.remove('correct', 'incorrect');
   });
   answers.forEach(a => a.classList.remove('correct', 'incorrect'));
+   shuffleList(document.getElementById('questions'));
+  shuffleList(document.getElementById('answers'));
 }
+
+
 
 
 
@@ -500,6 +517,7 @@ function resetLines() {
    document.getElementById('backHome').addEventListener('click', () => {
     alert('Kembali ke beranda (Beranda.html)');
   });
+  localStorage.setItem("GameDone", "true");
 </script>
 </body>
 </html>
