@@ -87,10 +87,47 @@
   <hr class="my-10" />
 
   <script>
-    // Drag and drop Game 3
-    const options = document.getElementById("options");
-    const answers = document.getElementById("answers");
-    let dragged;
+  const options = document.getElementById("options");
+  const answers = document.getElementById("answers");
+  let dragged;
+
+  // Fungsi acak (Fisher–Yates shuffle)
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  // Isi dan acak opsi saat halaman dimuat
+  const steps = [
+    "Mengidentifikasi zat yang diketahui",
+    "Menentukan mol zat",
+    "Menggunakan perbandingan mol",
+    "Menghitung massa atau volume zat yang ditanya"
+  ];
+
+  const shuffled = shuffleArray([...steps]);
+
+  // Kosongkan dan isi ulang div #options dengan langkah-langkah acak
+  options.innerHTML = "";
+  shuffled.forEach(step => {
+    const div = document.createElement("div");
+    div.className = "card p-4 rounded-2xl shadow cursor-move";
+    div.setAttribute("draggable", "true");
+    div.textContent = step;
+    options.appendChild(div);
+  });
+
+  // Re-bind dragstart ke elemen baru
+  document.querySelectorAll("[draggable=true]").forEach(el => {
+    el.addEventListener("dragstart", e => {
+      dragged = e.target;
+    });
+  });
+
+  // (Drag-over & drop sudah ada dan tidak perlu diubah)
 
     document.querySelectorAll("[draggable=true]").forEach(el => {
       el.addEventListener("dragstart", e => {
@@ -136,6 +173,7 @@
 
       document.getElementById("resultGame3").innerText = `Jawaban benar: ${score} dari 4`; 
     }
+    localStorage.setItem("Game1Done", "true");
   </script>
 </body>
 </html>
