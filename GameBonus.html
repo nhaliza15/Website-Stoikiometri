@@ -169,22 +169,29 @@ function rollDice() {
   document.querySelector("button[onclick='rollDice()']").disabled = true;
 }
 
-  function showQuestion() {
-    currentQuestion = questions[Math.floor(Math.random() * questions.length)];
-    questionText.textContent = currentQuestion.q;
-    questionBox.classList.remove("hidden");
-    answerInput.value = "";
-    feedback.textContent = "";
+  let usedQuestions = [];
+
+function showQuestion() {
+  const remainingQuestions = questions.filter((q) => !usedQuestions.includes(q.q));
+
+  if (remainingQuestions.length === 0) {
+    questionText.textContent = "Kamu sudah menjawab semua soal! 🎉";
+    answerInput.style.display = "none";
+    document.querySelector("#questionBox button").style.display = "none";
+    return;
   }
 
-  function showQuestion() {
-  currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+  currentQuestion = remainingQuestions[Math.floor(Math.random() * remainingQuestions.length)];
+  usedQuestions.push(currentQuestion.q);
+
   questionText.textContent = currentQuestion.q;
   questionBox.classList.remove("hidden");
+  answerInput.style.display = "inline-block";
   answerInput.value = "";
   feedback.textContent = "";
-  document.querySelector("#questionBox button").style.display = "inline-block"; // munculin tombol
+  document.querySelector("#questionBox button").style.display = "inline-block";
 }
+
 
 function checkAnswer() {
   const userAnswer = answerInput.value.trim();
@@ -228,8 +235,10 @@ function resetGame() {
   questionBox.classList.add("hidden");
   feedback.textContent = "";
   isWaitingAnswer = false;
+  usedQuestions = []; // Reset daftar soal yang sudah keluar
   document.querySelector("button[onclick='rollDice()']").disabled = false;
 }
+
 
   drawBoard();
   localStorage.setItem("GameBonusDone", "true");
